@@ -104,8 +104,8 @@ A sample `.github/workflows/deploy.yml` is included to automate deployment.
 
 ## Authors
 
-- **Your Name**
-- **Your Email**
+- **Asad Moinuddin**
+- **moinuddinasad@gmail.com**
 
 ## License
 
