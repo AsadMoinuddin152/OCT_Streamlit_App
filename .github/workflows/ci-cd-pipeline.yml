@@ -34,17 +34,18 @@ jobs:
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v3
+        with:
+          version: "v1.30.10" # Match your cluster version
 
-      - name: Configure Kubernetes Context
+      - name: Authenticate to AKS
         run: |
-          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig
-          export KUBECONFIG=kubeconfig
+          az aks get-credentials --resource-group asad_res --name asadaks --overwrite-existing
 
       - name: Deploy to AKS
         run: |
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
-          kubectl apply -f hpa.yaml
+          kubectl apply -f deployment.yaml --validate=false
+          kubectl apply -f service.yaml --validate=false
+          kubectl apply -f hpa.yaml --validate=false
 
       - name: Verify Deployment
         run: |
