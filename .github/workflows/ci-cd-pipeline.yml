@@ -37,9 +37,13 @@ jobs:
         with:
           version: "v1.30.10" # Match your cluster version
 
-      - name: Authenticate to AKS
+      - name: Authenticate to Azure
         run: |
-          az aks get-credentials --resource-group asad_res --name asadaks --overwrite-existing
+          echo "${{ secrets.AZURE_CREDENTIALS }}" > azure_auth.json
+          az login --service-principal --username "$(jq -r .clientId azure_auth.json)" \
+                   --password "$(jq -r .clientSecret azure_auth.json)" \
+                   --tenant "$(jq -r .tenantId azure_auth.json)"
+          rm -f azure_auth.json
 
       - name: Deploy to AKS
         run: |
