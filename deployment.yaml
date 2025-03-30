@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oct-streamlit-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oct-streamlit-app
+  template:
+    metadata:
+      labels:
+        app: oct-streamlit-app
+    spec:
+      containers:
+        - name: oct-streamlit-app
+          image: asadacr9876.azurecr.io/oct-streamlit-app:v1
+          ports:
+            - containerPort: 8501
